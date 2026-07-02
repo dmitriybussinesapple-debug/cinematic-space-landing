@@ -3,521 +3,559 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aeon — Venture Past Our Sky</title>
+<title>Jeton — One app for all your payments</title>
+<meta name="description" content="Jeton is a single account for all your payments. Add, Send, and Exchange money in one weightless, warm app." />
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          heading: ["'Instrument Serif'", "serif"],
-          body: ["'Barlow'", "sans-serif"],
-        },
-        borderRadius: {
-          DEFAULT: "9999px",
-        },
-      },
-    },
-  };
-</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f8a4a4'/%3E%3Cstop offset='1' stop-color='%23f73b20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23fff' stroke-width='6' opacity='.9'/%3E%3Ccircle cx='50' cy='50' r='13' fill='%23fff'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
-<script>window.Motion = window.Motion || window.FramerMotion;</script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
 
 <style>
-  html, body { background: #000; margin: 0; }
-  * { -webkit-font-smoothing: antialiased; }
+:root{
+  /* ── Colors ───────────────────────────────────────── */
+  --color-coral-flame:#f73b20;
+  --gradient-coral-flame:linear-gradient(135deg,#f8a4a4 0%,#f73b20 100%);
+  --color-brandwood:#360802;
+  --color-sunset-fade:#fef5f3;
+  --color-blush-mist:#fbdfd9;
+  --color-pure-white:#ffffff;
+  --color-carbon:#000000;
+  --color-mint-action:#34c771;
+  --color-cobalt-pulse:#477ee9;
+  --color-magenta-spark:#fb2d54;
 
-  .liquid-glass {
-    background: rgba(255,255,255,0.01);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-  .liquid-glass::before {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(180deg,
-      rgba(255,255,255,0.45) 0%,
-      rgba(255,255,255,0.15) 20%,
-      rgba(255,255,255,0) 40%,
-      rgba(255,255,255,0) 60%,
-      rgba(255,255,255,0.15) 80%,
-      rgba(255,255,255,0.45) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-  }
+  /* ── Typography ───────────────────────────────────── */
+  --font-sequel-sans:'DM Sans',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --fw-regular:400;
+  --fw-450:500;
+  --fw-medium:600;
 
-  .liquid-glass-strong {
-    background: rgba(255,255,255,0.01);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
-    border: none;
-    box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
-    position: relative;
-    overflow: hidden;
-  }
-  .liquid-glass-strong::before {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(180deg,
-      rgba(255,255,255,0.5) 0%,
-      rgba(255,255,255,0.2) 20%,
-      rgba(255,255,255,0) 40%,
-      rgba(255,255,255,0) 60%,
-      rgba(255,255,255,0.2) 80%,
-      rgba(255,255,255,0.5) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-  }
+  /* ── Spacing ──────────────────────────────────────── */
+  --spacing-4:4px;  --spacing-8:8px;   --spacing-12:12px; --spacing-16:16px;
+  --spacing-20:20px;--spacing-24:24px; --spacing-32:32px; --spacing-48:48px;
+  --spacing-56:56px;--spacing-160:160px;
+
+  /* ── Layout ───────────────────────────────────────── */
+  --page-max-width:1200px;
+  --section-gap:80px;
+
+  /* ── Radius ───────────────────────────────────────── */
+  --radius-tile:12px;
+  --radius-card:16px;
+  --radius-large:24px;
+  --radius-pill:150px;
+  --radius-nav:84px;
+
+  /* ── Shadows ──────────────────────────────────────── */
+  --shadow-float:rgba(247,59,32,0.10) 0px 8px 24px 0px, rgba(247,59,32,0.05) 0px 2px 8px 0px;
+  --shadow-lift:rgba(0,0,0,0.05) 0px -4px 16px 0px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:var(--font-sequel-sans);
+  font-weight:var(--fw-450);
+  color:var(--color-brandwood);
+  background:var(--color-pure-white);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+.wrap{
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  padding:0 var(--spacing-24);
+}
+
+/* ══════════════════════════════════════════════════════
+   TOP NAV
+   ══════════════════════════════════════════════════════ */
+.topbar{
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  padding:var(--spacing-24) 0;
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between}
+.wordmark{
+  font-weight:var(--fw-medium);
+  font-size:24px;
+  letter-spacing:0.01em;
+  color:#fff;
+  display:flex;align-items:center;gap:10px;
+}
+.wordmark .disk{
+  width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0%,#ffd9cf 30%,#f73b20 100%);
+  box-shadow:0 0 0 3px rgba(255,255,255,.35);
+}
+.nav-utils{display:flex;align-items:center;gap:var(--spacing-24)}
+.lang{
+  display:flex;align-items:center;gap:6px;
+  font-size:14px;color:#fff;font-weight:var(--fw-450);
+  opacity:.95;
+}
+.lang svg{width:16px;height:16px}
+.utils-login{color:#fff;font-size:16px;font-weight:var(--fw-450);opacity:.95}
+.btn-signup{
+  background:var(--color-pure-white);
+  border:1.5px solid var(--color-coral-flame);
+  color:var(--color-coral-flame);
+  border-radius:var(--radius-card);
+  padding:10px 20px;
+  font-size:16px;font-weight:var(--fw-450);
+  transition:transform .15s ease, box-shadow .2s ease;
+}
+.btn-signup:hover{transform:translateY(-1px)}
+
+/* ══════════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:linear-gradient(135deg,#f8a4a4 0%,#f9714f 45%,#f73b20 100%);
+  display:flex;align-items:center;
+  overflow:hidden;
+  padding:140px 0 120px;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 15% 110%,rgba(254,245,243,.55) 0%,transparent 55%);
+  pointer-events:none;
+}
+.hero .wrap{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:var(--spacing-48);
+}
+.hero-copy h1{
+  color:#fff;
+  font-weight:var(--fw-medium);
+  font-size:clamp(58px,9.5vw,155px);
+  line-height:0.90;
+  letter-spacing:0.03em;
+  margin-bottom:var(--spacing-24);
+}
+.hero-copy .sub{
+  color:#fff;
+  font-size:clamp(20px,3vw,33px);
+  line-height:1.1;
+  letter-spacing:0.01em;
+  font-weight:var(--fw-450);
+  opacity:.96;
+  margin-bottom:var(--spacing-32);
+  max-width:34ch;
+}
+.store-row{display:flex;flex-direction:column;gap:var(--spacing-12);max-width:230px}
+.store-btn{
+  display:flex;align-items:center;gap:12px;
+  background:transparent;
+  border:1.5px solid rgba(255,255,255,.9);
+  border-radius:var(--radius-card);
+  padding:10px 18px;
+  color:#fff;
+  transition:background .2s ease;
+}
+.store-btn:hover{background:rgba(255,255,255,.12)}
+.store-btn svg{width:26px;height:26px;flex:none}
+.store-btn .lbl{display:flex;flex-direction:column;line-height:1.1;text-align:left}
+.store-btn .lbl small{font-size:11px;opacity:.85;letter-spacing:.02em}
+.store-btn .lbl b{font-size:16px;font-weight:var(--fw-medium)}
+
+/* Hero 3D disk */
+.hero-visual{display:flex;justify-content:center;align-items:center;position:relative}
+.token-disk{
+  width:min(46vw,440px);
+  aspect-ratio:1;
+  border-radius:50%;
+  position:relative;
+  background:
+    radial-gradient(circle at 38% 30%, #ffe7dd 0%, #ffb39c 24%, #f9714f 55%, #f73b20 80%, #d92c14 100%);
+  box-shadow:
+    inset -24px -30px 60px rgba(150,20,4,.45),
+    inset 26px 26px 60px rgba(255,255,255,.55),
+    0 40px 90px rgba(150,20,4,.35);
+  animation:floaty 6s ease-in-out infinite;
+}
+.token-disk::before{
+  content:"";position:absolute;inset:16%;border-radius:50%;
+  background:
+    radial-gradient(circle at 40% 35%, #fff0ea 0%, #ffc3b0 40%, #f9714f 100%);
+  box-shadow:
+    inset -12px -14px 34px rgba(150,20,4,.4),
+    inset 12px 12px 30px rgba(255,255,255,.6);
+}
+.token-disk::after{
+  content:"";position:absolute;inset:34%;border-radius:50%;
+  background:radial-gradient(circle at 42% 38%, #fff 0%, #ffd8cb 55%, #f9835f 100%);
+  box-shadow:inset -6px -8px 20px rgba(150,20,4,.35), 0 6px 20px rgba(150,20,4,.25);
+}
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+
+/* ══════════════════════════════════════════════════════
+   SECTION TITLE ON WHITE
+   ══════════════════════════════════════════════════════ */
+.section{padding:var(--section-gap) 0}
+.section-title{
+  font-weight:var(--fw-medium);
+  font-size:clamp(44px,8vw,110px);
+  line-height:0.95;
+  letter-spacing:0.03em;
+  margin-bottom:var(--spacing-24);
+}
+.section-title.coral{color:var(--color-coral-flame)}
+.section-title.dark{color:var(--color-brandwood)}
+.section-lead{
+  font-size:clamp(18px,2.4vw,23px);
+  line-height:1.4;
+  max-width:44ch;
+  color:var(--color-brandwood);
+  opacity:.75;
+}
+
+/* ══════════════════════════════════════════════════════
+   COLOR-CODED ACTION VERBS
+   ══════════════════════════════════════════════════════ */
+.actions{background:var(--color-pure-white)}
+.action-list{display:flex;flex-direction:column;gap:var(--spacing-32);margin-top:var(--spacing-48)}
+.action-row{
+  display:flex;align-items:center;gap:var(--spacing-24);
+}
+.action-tile{
+  width:64px;height:64px;flex:none;
+  border-radius:var(--radius-tile);
+  display:flex;align-items:center;justify-content:center;
+}
+.action-tile svg{width:32px;height:32px;stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.action-word{
+  font-weight:var(--fw-medium);
+  font-size:clamp(40px,7vw,72px);
+  line-height:1.1;
+  letter-spacing:0.03em;
+}
+.action-desc{
+  font-size:16px;line-height:1.5;opacity:.7;margin-top:2px;
+  color:var(--color-brandwood);font-weight:var(--fw-450);
+}
+.a-add   .action-tile{background:var(--color-mint-action)}
+.a-add   .action-word{color:var(--color-mint-action)}
+.a-send  .action-tile{background:var(--color-cobalt-pulse)}
+.a-send  .action-word{color:var(--color-cobalt-pulse)}
+.a-exch  .action-tile{background:var(--color-magenta-spark)}
+.a-exch  .action-word{color:var(--color-magenta-spark)}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE CARDS (warm tint, upward lift)
+   ══════════════════════════════════════════════════════ */
+.card-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--spacing-24);margin-top:var(--spacing-48);
+}
+.wcard{
+  background:var(--color-sunset-fade);
+  border-radius:var(--radius-large);
+  padding:var(--spacing-32);
+  box-shadow:var(--shadow-lift);
+  transition:transform .2s ease;
+}
+.wcard:hover{transform:translateY(-4px)}
+.wcard .chip{
+  width:48px;height:48px;border-radius:var(--radius-tile);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:var(--spacing-20);
+}
+.wcard .chip svg{width:24px;height:24px;stroke:#fff;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wcard h3{font-size:23px;font-weight:var(--fw-medium);letter-spacing:.01em;margin-bottom:var(--spacing-8);line-height:1.25}
+.wcard p{font-size:16px;line-height:1.5;opacity:.72;font-weight:var(--fw-450)}
+.chip-coral{background:var(--color-coral-flame)}
+.chip-mint{background:var(--color-mint-action)}
+.chip-cobalt{background:var(--color-cobalt-pulse)}
+
+/* ══════════════════════════════════════════════════════
+   TAG STRIP (chromatic outlined tags)
+   ══════════════════════════════════════════════════════ */
+.tag-strip{display:flex;flex-wrap:wrap;gap:var(--spacing-12);margin-top:var(--spacing-32)}
+.tag{
+  padding:8px 18px;border-radius:var(--radius-pill);
+  font-size:14px;font-weight:var(--fw-450);background:#fff;
+}
+.tag.mint{border:1.5px solid var(--color-mint-action);color:var(--color-mint-action)}
+.tag.cobalt{border:1.5px solid var(--color-cobalt-pulse);color:var(--color-cobalt-pulse)}
+.tag.magenta{border:1.5px solid var(--color-magenta-spark);color:var(--color-magenta-spark)}
+.tag.coral{border:1.5px solid var(--color-coral-flame);color:var(--color-coral-flame)}
+
+/* ══════════════════════════════════════════════════════
+   CTA BAND
+   ══════════════════════════════════════════════════════ */
+.cta-band{text-align:center;padding:120px 0 160px}
+.cta-band .btn-signup{font-size:18px;padding:14px 32px;margin-top:var(--spacing-32)}
+
+/* ══════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════ */
+footer{
+  background:var(--color-sunset-fade);
+  padding:var(--spacing-56) 0 120px;
+}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-32)}
+footer .wordmark{color:var(--color-brandwood)}
+footer .wordmark .disk{box-shadow:0 0 0 3px rgba(247,59,32,.18)}
+.foot-cols{display:flex;gap:var(--spacing-56);flex-wrap:wrap}
+.foot-col h4{font-size:12px;letter-spacing:.12px;text-transform:uppercase;opacity:.5;margin-bottom:var(--spacing-16)}
+.foot-col a{display:block;font-size:16px;opacity:.75;margin-bottom:var(--spacing-12);font-weight:var(--fw-450)}
+.foot-col a:hover{color:var(--color-coral-flame);opacity:1}
+
+/* ══════════════════════════════════════════════════════
+   FLOATING BOTTOM NAV PILL
+   ══════════════════════════════════════════════════════ */
+.floating{
+  position:fixed;left:0;right:0;bottom:24px;z-index:50;
+  display:flex;justify-content:center;gap:var(--spacing-12);
+  padding:0 var(--spacing-24);
+  pointer-events:none;
+}
+.floating > *{pointer-events:auto}
+.nav-pill,.support-pill{
+  background:var(--color-pure-white);
+  border:1.5px solid var(--color-coral-flame);
+  border-radius:var(--radius-nav);
+  box-shadow:var(--shadow-float);
+  display:flex;align-items:center;
+}
+.nav-pill{gap:var(--spacing-8);padding:8px 12px 8px 16px}
+.nav-pill .home{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-pill .home svg{width:20px;height:20px;stroke:var(--color-coral-flame);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nav-item{
+  display:flex;align-items:center;gap:5px;
+  padding:8px 14px;border-radius:var(--radius-nav);
+  font-size:16px;font-weight:var(--fw-450);color:var(--color-brandwood);
+  transition:background .18s ease;
+}
+.nav-item:hover{background:var(--color-sunset-fade)}
+.nav-item svg{width:13px;height:13px;stroke:var(--color-brandwood);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.support-pill{gap:8px;padding:8px 20px;font-size:16px;font-weight:var(--fw-450);color:var(--color-brandwood)}
+.support-pill svg{width:20px;height:20px;stroke:var(--color-coral-flame);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════ */
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;text-align:left}
+  .hero-visual{order:-1;margin-bottom:var(--spacing-32)}
+  .card-grid{grid-template-columns:1fr}
+  .nav-item.hide-sm{display:none}
+  .support-pill .lbl{display:none}
+  .support-pill{padding:8px 14px}
+}
+@media (max-width:560px){
+  .nav-utils .utils-login,.nav-utils .lang{display:none}
+  .nav-item{padding:8px 10px;font-size:14px}
+}
 </style>
 </head>
-<body class="bg-black font-body">
-  <div id="root"></div>
+<body>
 
-  <!-- Suppress benign Framer Motion list-key dev warnings -->
-  <script>
-    (function () {
-      const orig = console.error;
-      console.error = function (...args) {
-        const msg = typeof args[0] === "string" ? args[0] : "";
-        if (msg.includes("unique \"key\"") || msg.includes("unique key")) return;
-        orig.apply(console, args);
-      };
-    })();
-  </script>
+<!-- ── TOP NAV ─────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="wordmark" href="#"><span class="disk"></span>Jeton</a>
+    <nav class="nav-utils">
+      <span class="lang">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>
+        EN
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M6 9l6 6 6-6"/></svg>
+      </span>
+      <a class="utils-login" href="#">Log in</a>
+      <button class="btn-signup">Sign up</button>
+    </nav>
+  </div>
+</header>
 
-  <!-- ===== Icons ===== -->
-  <script type="text/babel">
-    function ArrowUpRight({ className = "h-5 w-5" }) {
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M7 17L17 7" />
-          <path d="M7 7h10v10" />
-        </svg>
-      );
-    }
-    function Play({ className = "h-4 w-4" }) {
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-          <polygon points="6 4 20 12 6 20 6 4" />
-        </svg>
-      );
-    }
-    window.ArrowUpRight = ArrowUpRight;
-    window.Play = Play;
-  </script>
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1>One app<br>for all needs</h1>
+      <p class="sub">A single account for all your payments — add, send and exchange money in seconds.</p>
+      <div class="store-row">
+        <a class="store-btn" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.9c0-2 1.6-3 1.7-3-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.2 2-1.4 2.4-.4 6 1 8 .6 1 1.4 2.1 2.4 2 .9 0 1.3-.6 2.4-.6 1.1 0 1.4.6 2.4.6 1 0 1.6-1 2.2-2 .7-1.1 1-2.2 1-2.3 0 0-1.9-.7-1.9-2.8zM14.6 6.6c.5-.6.9-1.5.8-2.4-.8 0-1.7.5-2.2 1.1-.5.5-.9 1.4-.8 2.3.9.1 1.7-.4 2.2-1z"/></svg>
+          <span class="lbl"><small>Download on the</small><b>App Store</b></span>
+        </a>
+        <a class="store-btn" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3.3v17.4c0 .4.4.6.7.4l9.6-8.7-9.6-8.9c-.3-.2-.7 0-.7.4zM15.6 11.1L6.4 2.7l11 6.3-1.8 2.1zM15.6 12.9l1.8 2.1-11 6.3 9.2-8.4zM17.9 10l2.6 1.5c.5.3.5.9 0 1.2L17.9 14l-2-2 2-2z"/></svg>
+          <span class="lbl"><small>Get it on</small><b>Google Play</b></span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="token-disk" role="img" aria-label="Jeton token — a glowing coral disk"></div>
+    </div>
+  </div>
+</section>
 
-  <!-- ===== FadingVideo (custom rAF crossfade) ===== -->
-  <script type="text/babel">
-    const FADE_MS = 500;
-    const FADE_OUT_LEAD = 0.55;
+<!-- ── SECTION TITLE ON WHITE ───────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title coral">Unify your<br>finances.</h2>
+    <p class="section-lead">One weightless account that speaks in warmth, not walls. Everything you do with money, in a single color-coded vocabulary.</p>
+  </div>
+</section>
 
-    function FadingVideo({ src, className, style }) {
-      const videoRef = React.useRef(null);
-      const rafRef = React.useRef(null);
-      const fadingOutRef = React.useRef(false);
+<!-- ── COLOR-CODED ACTION VERBS ─────────────────────────── -->
+<section class="section actions">
+  <div class="wrap">
+    <h2 class="section-title dark">Three verbs.<br>Three colors.</h2>
+    <div class="action-list">
+      <div class="action-row a-add">
+        <span class="action-tile">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+        <div>
+          <div class="action-word">Add</div>
+          <div class="action-desc">Top up your balance instantly from any card or bank.</div>
+        </div>
+      </div>
+      <div class="action-row a-send">
+        <span class="action-tile">
+          <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </span>
+        <div>
+          <div class="action-word">Send</div>
+          <div class="action-desc">Transfer money to anyone, anywhere, in a single tap.</div>
+        </div>
+      </div>
+      <div class="action-row a-exch">
+        <span class="action-tile">
+          <svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4M21 7H8M7 21l-4-4 4-4M3 17h13"/></svg>
+        </span>
+        <div>
+          <div class="action-word">Exchange</div>
+          <div class="action-desc">Convert 30+ currencies at rates that stay honest.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      React.useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
+<!-- ── FEATURE CARDS ────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title dark">Built weightless.</h2>
+    <div class="card-grid">
+      <article class="wcard">
+        <span class="chip chip-coral">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+        </span>
+        <h3>One account</h3>
+        <p>Hold, spend and manage every currency behind a single warm balance.</p>
+      </article>
+      <article class="wcard">
+        <span class="chip chip-mint">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z"/></svg>
+        </span>
+        <h3>Zero fuss fees</h3>
+        <p>Transparent pricing, no hidden charges, no surprises at checkout.</p>
+      </article>
+      <article class="wcard">
+        <span class="chip chip-cobalt">
+          <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg>
+        </span>
+        <h3>Bank-grade safe</h3>
+        <p>Your money is guarded by encryption and 24/7 fraud monitoring.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        const fadeTo = (target, duration) => {
-          if (rafRef.current) cancelAnimationFrame(rafRef.current);
-          const from = parseFloat(video.style.opacity) || 0;
-          const start = performance.now();
-          const step = (now) => {
-            const t = Math.min((now - start) / duration, 1);
-            video.style.opacity = String(from + (target - from) * t);
-            if (t < 1) rafRef.current = requestAnimationFrame(step);
-          };
-          rafRef.current = requestAnimationFrame(step);
-        };
+<!-- ── TAGS ─────────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title coral">Everything,<br>color-coded.</h2>
+    <div class="tag-strip">
+      <span class="tag mint">Top up</span>
+      <span class="tag cobalt">Transfers</span>
+      <span class="tag magenta">Exchange</span>
+      <span class="tag coral">Virtual cards</span>
+      <span class="tag mint">Savings</span>
+      <span class="tag cobalt">Split bills</span>
+      <span class="tag magenta">FX rates</span>
+      <span class="tag coral">Spending insights</span>
+    </div>
+  </div>
+</section>
 
-        const onLoadedData = () => {
-          video.style.opacity = "0";
-          video.play().catch(() => {});
-          fadeTo(1, FADE_MS);
-        };
-        const onTimeUpdate = () => {
-          const remaining = video.duration - video.currentTime;
-          if (!fadingOutRef.current && remaining <= FADE_OUT_LEAD && remaining > 0) {
-            fadingOutRef.current = true;
-            fadeTo(0, FADE_MS);
-          }
-        };
-        const onEnded = () => {
-          video.style.opacity = "0";
-          setTimeout(() => {
-            video.currentTime = 0;
-            video.play().catch(() => {});
-            fadingOutRef.current = false;
-            fadeTo(1, FADE_MS);
-          }, 100);
-        };
+<!-- ── CTA BAND ─────────────────────────────────────────── -->
+<section class="cta-band">
+  <div class="wrap">
+    <h2 class="section-title coral">Ready when<br>you are.</h2>
+    <p class="section-lead" style="margin:0 auto">Join the account that turns routine money moves into a language you already know.</p>
+    <button class="btn-signup">Sign up free</button>
+  </div>
+</section>
 
-        video.addEventListener("loadeddata", onLoadedData);
-        video.addEventListener("timeupdate", onTimeUpdate);
-        video.addEventListener("ended", onEnded);
+<!-- ── FOOTER ───────────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <a class="wordmark" href="#"><span class="disk"></span>Jeton</a>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#">Personal</a>
+        <a href="#">Business</a>
+        <a href="#">Cards</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="#">Help centre</a>
+        <a href="#">Contact</a>
+        <a href="#">Status</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-        return () => {
-          if (rafRef.current) cancelAnimationFrame(rafRef.current);
-          video.removeEventListener("loadeddata", onLoadedData);
-          video.removeEventListener("timeupdate", onTimeUpdate);
-          video.removeEventListener("ended", onEnded);
-        };
-      }, [src]);
+<!-- ── FLOATING BOTTOM NAV PILL ─────────────────────────── -->
+<div class="floating">
+  <nav class="nav-pill">
+    <span class="home" aria-label="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+    </span>
+    <a class="nav-item" href="#">Personal
+      <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    </a>
+    <a class="nav-item hide-sm" href="#">Business
+      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+    </a>
+    <a class="nav-item hide-sm" href="#">Company
+      <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    </a>
+  </nav>
+  <button class="support-pill">
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 9 9 0 01-3.9-.9L3 20l1.3-4.1A8.4 8.4 0 013 11.5 8.5 8.5 0 0112 3a8.5 8.5 0 019 8.5z"/></svg>
+    <span class="lbl">Support</span>
+  </button>
+</div>
 
-      return (
-        <video
-          ref={videoRef}
-          src={src}
-          className={className}
-          style={{ ...style, opacity: 0 }}
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-        />
-      );
-    }
-    window.FadingVideo = FadingVideo;
-  </script>
-
-  <!-- ===== BlurText (word-by-word blur-in) ===== -->
-  <script type="text/babel">
-    function BlurText({ text, className }) {
-      const { motion } = window.Motion;
-      const ref = React.useRef(null);
-      const [inView, setInView] = React.useState(false);
-
-      React.useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const obs = new IntersectionObserver(
-          (entries) => {
-            if (entries[0].isIntersecting) {
-              setInView(true);
-              obs.disconnect();
-            }
-          },
-          { threshold: 0.1 }
-        );
-        obs.observe(el);
-        return () => obs.disconnect();
-      }, []);
-
-      const words = text.split(" ");
-
-      return (
-        <p
-          ref={ref}
-          className={className}
-          style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.1em" }}
-        >
-          {words.map((word, i) => (
-            <motion.span
-              key={i}
-              initial={{ filter: "blur(10px)", opacity: 0, y: 50 }}
-              animate={
-                inView
-                  ? {
-                      filter: ["blur(10px)", "blur(5px)", "blur(0px)"],
-                      opacity: [0, 0.5, 1],
-                      y: [50, -5, 0],
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 0.7,
-                times: [0, 0.5, 1],
-                ease: "easeOut",
-                delay: (i * 100) / 1000,
-              }}
-              style={{ display: "inline-block", marginRight: "0.28em" }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </p>
-      );
-    }
-    window.BlurText = BlurText;
-  </script>
-
-  <!-- ===== Navbar ===== -->
-  <script type="text/babel">
-    function Navbar() {
-      const { ArrowUpRight } = window;
-      const links = ["Home", "Voyages", "Worlds", "Innovation", "Plan Launch"];
-      return (
-        <nav className="fixed top-4 left-0 right-0 z-50 px-8 lg:px-16">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center shrink-0">
-              <span className="font-heading italic text-white text-2xl lowercase leading-none">a</span>
-            </div>
-
-            {/* Center pill (desktop) */}
-            <div className="hidden lg:flex liquid-glass rounded-full px-1.5 py-1.5 items-center">
-              {links.map((l) => (
-                <a key={l} href="#"
-                   className="px-3 py-2 text-sm font-medium text-white/90 font-body">
-                  {l}
-                </a>
-              ))}
-              <button
-                 className="ml-1 flex items-center gap-1 bg-white text-black rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap">
-                Claim a Spot
-                <ArrowUpRight className="h-4 w-4" />
-              </button>
-            </div>
-
-            {/* Right spacer */}
-            <div className="w-12 h-12 shrink-0 invisible" aria-hidden="true"></div>
-          </div>
-        </nav>
-      );
-    }
-    window.Navbar = Navbar;
-  </script>
-
-  <!-- ===== Hero stat icons ===== -->
-  <script type="text/babel">
-    function ClockIcon() {
-      return (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-             className="text-white">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3 2" />
-        </svg>
-      );
-    }
-    function GlobeIcon() {
-      return (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-             className="text-white">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M3 12h18" />
-          <path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z" />
-        </svg>
-      );
-    }
-    window.ClockIcon = ClockIcon;
-    window.GlobeIcon = GlobeIcon;
-  </script>
-
-  <!-- ===== Hero Section ===== -->
-  <script type="text/babel">
-    function Hero() {
-      const { motion } = window.Motion;
-      const { FadingVideo, Navbar, BlurText, ArrowUpRight, Play, ClockIcon, GlobeIcon } = window;
-
-      const rise = (delay) => ({
-        initial: { filter: "blur(10px)", opacity: 0, y: 20 },
-        animate: { filter: "blur(0px)", opacity: 1, y: 0 },
-        transition: { duration: 0.8, ease: "easeOut", delay },
-      });
-
-      const stats = [
-        { icon: <ClockIcon />, value: "34.5 Min", label: "Average Videos Watch Time" },
-        { icon: <GlobeIcon />, value: "2.8B+", label: "Users Across the Globe" },
-      ];
-      const partners = ["Aeon", "Vela", "Apex", "Orbit", "Zeno"];
-
-      return (
-        <section className="relative h-screen w-full overflow-hidden bg-black">
-          <FadingVideo
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
-            className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top z-0"
-            style={{ width: "120%", height: "120%" }}
-          />
-
-          <div className="relative z-10 flex flex-col h-full">
-            <Navbar />
-
-            {/* Hero content */}
-            <div className="flex-1 flex flex-col items-center justify-center text-center pt-24 px-4">
-              <motion.div {...rise(0.4)}>
-                <div className="liquid-glass rounded-full inline-flex items-center gap-2 pl-1.5 py-1.5">
-                  <span className="bg-white text-black rounded-full px-3 py-1 text-xs font-semibold">New</span>
-                  <span className="text-sm text-white/90 pr-3">Maiden Crewed Voyage to Mars Arrives 2026</span>
-                </div>
-              </motion.div>
-
-              <div className="mt-6">
-                <BlurText
-                  text="Venture Past Our Sky Across the Universe"
-                  className="text-6xl md:text-7xl lg:text-[5.5rem] font-heading italic text-white leading-[0.8] max-w-2xl justify-center tracking-[-4px]"
-                />
-              </div>
-
-              <motion.p
-                {...rise(0.8)}
-                className="mt-4 text-sm md:text-base text-white max-w-2xl font-body font-light leading-tight">
-                Discover the universe in ways once unimaginable. Our pioneering vessels and breakthrough
-                engineering bring deep-space exploration within reach—secure and extraordinary.
-              </motion.p>
-
-              <motion.div {...rise(1.1)} className="flex items-center gap-6 mt-6">
-                <button
-                   className="liquid-glass-strong rounded-full px-5 py-2.5 text-sm font-medium text-white flex items-center gap-2">
-                  Start Your Voyage
-                  <ArrowUpRight className="h-5 w-5" />
-                </button>
-                <a href="#capabilities"
-                   className="flex items-center gap-2 text-sm font-medium text-white">
-                  View Liftoff
-                  <Play className="h-4 w-4" />
-                </a>
-              </motion.div>
-
-              <motion.div {...rise(1.3)} className="flex items-stretch gap-4 mt-8">
-                {stats.map((s) => (
-                  <div key={s.value} className="liquid-glass p-5 w-[220px] rounded-[1.25rem] flex flex-col justify-between text-left">
-                    <div>{s.icon}</div>
-                    <div>
-                      <div className="font-heading italic text-white text-4xl tracking-[-1px] leading-none">{s.value}</div>
-                      <div className="text-xs text-white font-body font-light mt-2">{s.label}</div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Partners */}
-            <motion.div {...rise(1.4)} className="flex flex-col items-center gap-4 pb-8">
-              <div className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white">
-                Collaborating with top aerospace pioneers globally
-              </div>
-              <div className="flex items-center gap-12 md:gap-16">
-                {partners.map((p) => (
-                  <span key={p} className="font-heading italic text-white text-2xl md:text-3xl tracking-tight">{p}</span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      );
-    }
-    window.Hero = Hero;
-  </script>
-
-  <!-- ===== Capabilities Section ===== -->
-  <script type="text/babel">
-    function Capabilities() {
-      const { motion } = window.Motion;
-      const { FadingVideo } = window;
-
-      const cards = [
-        {
-          iconPath: "M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21H5Zm1-4h12l-3.75-5-3 4L9 13l-3 4Z",
-          tags: ["Natural Context", "Photo Realism", "Infinite Settings", "Eco-Vibe"],
-          title: "AI Scenery",
-          body: "AI analyzes your product to create indistinguishable natural environments — from Icelandic cliffs to misty forests.",
-        },
-        {
-          iconPath: "M4 6.47 5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.89-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4Z",
-          tags: ["Scale Fast", "Visual Consistency", "Time Saver", "Ready to Post"],
-          title: "Batch Production",
-          body: "Style your entire product line in minutes. Create a unified visual identity for catalogues and social media without weeks of retouching.",
-        },
-        {
-          iconPath: "M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1Zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7Z",
-          tags: ["Ray Tracing", "Physical Shadows", "Studio Quality", "Sunlight Sync"],
-          title: "Smart Lighting",
-          body: "Automatic lighting and material adjustment. Achieve flawless integration with realistic shadows and sunlight.",
-        },
-      ];
-
-      return (
-        <section id="capabilities" className="relative min-h-screen w-full overflow-hidden bg-black">
-          <FadingVideo
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4"
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          />
-
-          <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-10 flex flex-col min-h-screen">
-            <div className="mb-auto">
-              <div className="text-sm font-body text-white/80 mb-6">// Capabilities</div>
-              <h2 className="font-heading italic text-white text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] tracking-[-3px]">
-                Production<br />evolved
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-                {cards.map((c) => (
-                  <div key={c.title} className="liquid-glass rounded-[1.25rem] p-6 min-h-[360px] flex flex-col">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="liquid-glass w-11 h-11 rounded-[0.75rem] flex items-center justify-center shrink-0">
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6 text-white">
-                          <path d={c.iconPath} />
-                        </svg>
-                      </div>
-                      <div className="flex flex-wrap justify-end gap-1.5 max-w-[70%]">
-                        {c.tags.map((t) => (
-                          <span key={t} className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex-1"></div>
-
-                    <div className="mt-6">
-                      <h3 className="font-heading italic text-white text-3xl md:text-4xl tracking-[-1px] leading-none">{c.title}</h3>
-                      <p className="mt-3 text-sm text-white/90 font-body font-light leading-snug max-w-[32ch]">{c.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-    window.Capabilities = Capabilities;
-  </script>
-
-  <!-- ===== App + mount ===== -->
-  <script type="text/babel">
-    function App() {
-      const { Hero, Capabilities } = window;
-      return (
-        <React.Fragment>
-          <Hero />
-          <Capabilities />
-        </React.Fragment>
-      );
-    }
-    window.App = App;
-
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
 </body>
 </html>
